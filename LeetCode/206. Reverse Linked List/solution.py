@@ -4,21 +4,20 @@
 #         self.val = val
 #         self.next = next
 
-
-
-# Iterative Solution
-from typing import Optional
-
-
+# Iterative
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        prevNode, currNode = None, head
-        while currNode:
-            nextNode = currNode.next
-            currNode.next = prevNode
-            prevNode = currNode
-            currNode = nextNode
+        prevNode = None
+
+        while head:
+            nextNode = head.next
+            head.next = prevNode
+            prevNode = head
+            head = nextNode
+
         return prevNode
+# Time = O(n)
+# Space = O(1)
 
 # Time Complexity = O(n)
 # Space Complexity = O(1)
