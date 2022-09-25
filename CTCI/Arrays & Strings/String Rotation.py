@@ -2,7 +2,6 @@
 # of another. Given two strings, sl and s2, write code to check if s2 is a rotation of sl using only one
 # call to isSubstring(e.g., "waterbottle" is a rotation of"erbottlewat").
 
-
 def isRotated(s1, s2):
     if len(s1) != len(s2) and len(s2) < 0:
         return False
