@@ -16,16 +16,14 @@
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        maxProfit = 0
-        left, right = 0, 1  # buy sell
+        maxProfit, buyDay = 0, 0
 
-        while right < len(prices):
-            if prices[left] < prices[right]:
-                currProfit = prices[right] - prices[left]
-                maxProfit = max(maxProfit, currProfit)
-            else:
-                left = right
-            right += 1
+        for sellDay in range(1, len(prices)):
+            currProfit = prices[sellDay] - prices[buyDay]
+            maxProfit = max(maxProfit, currProfit)
+
+            if prices[sellDay] < prices[buyDay]:
+                buyDay = sellDay
 
         return maxProfit
 
