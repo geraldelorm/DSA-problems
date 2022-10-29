@@ -24,3 +24,25 @@ class Solution:
 
 #     Time = O(n * m)
 #      Space = O(n)
+
+
+class Solution:
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        if subRoot == None:
+            return True
+        if root == None:
+            return False
+
+        if self.isSameTree(root, subRoot):
+            return True
+
+        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+
+    def isSameTree(self, node1, node2):
+        if not node1 and not node2:
+            return True
+        if node1 and node2 and node1.val == node2.val:
+            return self.isSameTree(node1.left, node2.left) and self.isSameTree(node1.right, node2.right)
+
+        return False
+ 

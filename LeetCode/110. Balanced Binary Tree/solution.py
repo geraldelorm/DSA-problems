@@ -19,3 +19,25 @@ class Solution:
 
 # Time O(n)
 # Space O(1)
+
+
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        self.answer = True
+        if root == None:
+            return True
+
+        self.dfs_height(root)
+        return self.answer
+
+    def dfs_height(self, root):
+        if root == None or self.answer == False:
+            return 0
+
+        left_h = self.dfs_height(root.left)
+        right_h = self.dfs_height(root.right)
+
+        if abs(left_h - right_h) > 1:
+            self.answer = False
+
+        return max(left_h, right_h) + 1
