@@ -20,3 +20,16 @@ class Solution:
 
 # Time = O(n + m) |Vertices| + |Edges|
 # Space = O(n)
+
+
+class Solution:
+    def findCenter(self, edges: List[List[int]]) -> int:
+        connections = [0] * (len(edges) + 2)
+
+        for v in edges:
+            connections[v[0]] += 1
+            connections[v[1]] += 1
+
+        for i in range(1, len(connections)):
+            if connections[i] == len(edges):
+                return i
