@@ -34,9 +34,9 @@ class Solution:
         for sell in range(1, len(prices)):
             if prices[sell] < prices[buy]:
                 buy = sell
-
-            curr_profit = prices[sell] - prices[buy]
-            max_profit = max(max_profit, curr_profit)
+            else:
+                curr_profit = prices[sell] - prices[buy]
+                max_profit = max(max_profit, curr_profit)
 
         return max_profit
 # Time = O(N)
