@@ -1,2 +1,2 @@
 # DSA
-My solution to LeetCode and HackerRank problems + time/space complexities 
+My solution to Data Structures & Algorithm problems + time/space complexity analysis
