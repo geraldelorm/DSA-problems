@@ -1,6 +1,6 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        ROWS, COLS = len(board), len(board[0])
+        ROWS, COLS =  len(board), len(board[0])
         path = set()
         
         def dfs(r, c, i):
