@@ -14,7 +14,7 @@ class Solution:
         return sub == sub[::-1]
     
 #     TC: O(n^3)
-#     SC: (O(n))
+#     SC: (O(n^2))
 
 
 # Optimal:
