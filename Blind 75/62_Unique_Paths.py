@@ -12,7 +12,7 @@ class Solution:
         return traverse(1, 1)
     
 # TC: O(2^n*m)
-# SC: O(1)
+# SC: O(n*m)
 
 
 # DP - memo
@@ -32,4 +32,4 @@ class Solution:
         return traverse(1, 1, {(m, n): 1})
     
 # TC: O(n*m)
-# SC: O(n)
+# SC: O(n*m)
