@@ -1,33 +1,37 @@
-#Brute Force - replace diplicates in string
+#Brute Force
 from string import ascii_lowercase
 class Solution:
     def removeDuplicates(self, s: str) -> str:
-        #generate all possible duplicates
-        duplicates = {2 * ch for ch in ascii_lowercase}
-        
-        #use lenght to track is S changed
-        prev_length = -1
-        while prev_length != len(s):
-            prev_length = len(s)
+        #create a set of duplicates 
+        duplicates = {2*c for c in ascii_lowercase}
+
+        #while s contains duplicates replace them with ""
+        prev_len = 0
+        while prev_len != len(s):
+            prev_len = len(s)
             for dup in duplicates:
                 s = s.replace(dup, "")
 
         return s
-        # TC: O(N^2)
-        # SC: O(n)
 
-#Optimal Solution - using a output stack to
-from string import ascii_lowercase
+        # TC: O(N^2)
+        # SC: O(N)
+
+#Optimal
 class Solution:
     def removeDuplicates(self, s: str) -> str:
-        output = []
+        #track the characters in a stack 
+        stack = [] 
 
+        #iterate over s if the curr char == top of stack then I can pop from the stack
+    
         for c in s:
-            if output and c == output[-1]:
-                output.pop()
-            else:
-                output.append(c)
+            if stack and stack[-1] == c:
+                stack.pop()
+                continue
+            stack.append(c)
 
-        return "".join(output)
-        # TC: O(n)
-        # SC: O(n)
+        return "".join(stack)
+
+        # TC: O(N)
+        # SC: O(N) O(1) if result is not considered 
