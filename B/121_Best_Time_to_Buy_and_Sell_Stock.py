@@ -1,19 +1,35 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        if not prices or len(prices) < 2: return 0
+        maxProfit = 0
+        b, s = 0, len(prices) - 1
 
-        max_profit, buy_day, sell_day = 0, 0, 1
+        for i in range(len(prices)):
+            for j in range(i + 1, len(prices)):
+                if prices[j] > prices[i]:
+                    currProfit = prices[j] - prices[i]
+                    maxProfit = max(maxProfit, currProfit)
 
-        while sell_day < len(prices):
-            curr_profit = prices[sell_day] - prices[buy_day]
-            max_profit = max(max_profit, curr_profit)
+        return maxProfit
 
-            if prices[buy_day] >= prices[sell_day]:
-                buy_day = sell_day
+# Time = O(n^2)
+# Space = O(1)
 
-            sell_day += 1
 
-        return max_profit
+#Optimal
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        maxProfit = 0
+        buyDay, sellDay = 0, 1
 
-        # TC: O(n)
-        # SC: O(1)
+        while sellDay < len(prices):
+            currProfit = prices[sellDay] - prices[buyDay]
+            maxProfit = max(maxProfit, currProfit)
+            if prices[buyDay] >= prices[sellDay]:
+                buyDay = sellDay
+
+            sellDay += 1
+
+        return maxProfit
+
+# TC: O(n)
+# SC: O(1)
