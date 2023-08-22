@@ -42,6 +42,6 @@ class Solution:
         return output
 
 
-        # TC: O(N + M)
-        # SC: O(N + M)
+        # TC: O(N + M) ~2 pasases
+        # SC: O(N + M) ~2(N  + M)
 
