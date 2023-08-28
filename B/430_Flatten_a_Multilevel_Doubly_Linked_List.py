@@ -59,3 +59,6 @@ class Solution:
         #detach the dummyHead from the original values starting from its next
         pseudoHead.next.prev = None
         return pseudoHead.next
+
+# tc: O(n)
+# sc: O(n)
