@@ -12,5 +12,5 @@ class Solution:
 
         return res
 
-# TC: O(n)
+# TC: O(1) 3999 max from description
 # SC: O(1)
