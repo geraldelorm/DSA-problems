@@ -24,6 +24,6 @@ class Solution:
 
         return unhappy
 
-        # TC: O(n) n*3
-        # SC: O(n)
+        # TC: O(n^2)
+        # SC: O(n^2)
         
