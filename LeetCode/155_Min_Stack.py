@@ -1,32 +1,27 @@
 class MinStack:
 
     def __init__(self):
-        self.stack = []    
+        self.stack = []
+        self.minStack = []
 
     def push(self, val: int) -> None:
-        if not self.stack:
-            self.stack.append([val, val])
-        else:
-            currMin = self.stack[-1][1]
-            self.stack.append([val, min(val, currMin)])      
+        self.stack.append(val)
+        if len(self.minStack) == 0:
+            self.minStack.append(val)
+        elif  val <= self.minStack[-1]:
+            self.minStack.append(val)
 
     def pop(self) -> None:
+        if self.stack[-1] == self.minStack[-1]:
+            self.minStack.pop()
         self.stack.pop()
         
-
     def top(self) -> int:
-        return self.stack[-1][0]
-        
+        return self.stack[-1]
 
     def getMin(self) -> int:
-        return self.stack[-1][1]
+        return self.minStack[-1]
 
-        # TC (1)
-        # SC (n)
-
-
-
-#Second solutioin use two stacks 
         
 
 
@@ -36,3 +31,8 @@ class MinStack:
 # obj.pop()
 # param_3 = obj.top()
 # param_4 = obj.getMin()
+
+
+# Space Complexity = O(n) 
+# Time Complexity = O(1) for all operations
+

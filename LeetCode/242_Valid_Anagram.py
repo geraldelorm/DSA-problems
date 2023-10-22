@@ -1,54 +1,35 @@
-# Pythonic SOlutions
-
-#Sorting
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        return sorted(s) == sorted(t)
-        
-        # TC = O(NlogN)
-        # SC = O(N)
-
-#Hashmap
-class Solution:
-    def isAnagram(self, s: str, t: str) -> bool:
-        return Counter(s) == Counter(t)
-        
-        # TC = O(N)
-        # SC = O(N)
-
-
-
-
-#Long SOlutions
-# Sorting
-class Solution:
-    def isAnagram(self, s: str, t: str) -> bool:
-        if len(s) != len(t):
+        if not len(s) == len(t):
             return False
         
-        return sorted(s) == sorted(t)
-    
-    # TC: O(nlogn)
-    # SC: O(1)
-    
-    
-# Counting frequency
+        lookup1, lookup2 = {}, {}
+        
+        for i in range(len(s)):
+            if s[i] in lookup1.keys():
+                lookup1[s[i]] += 1
+            else:
+                lookup1[s[i]] = 1
+                
+            if t[i] in lookup2.keys():
+                lookup2[t[i]] += 1
+            else:
+                lookup2[t[i]] = 1
+                
+        for item in lookup1:
+            if not item in lookup2.keys():
+                return False
+            elif not (lookup1[item] == lookup2[item]):
+                return False
+            
+        return True         
+
+# Time O(n)
+# Space O(n)
+
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        if len(s) != len(t):
-            return False
-        
-        freq = {}
-        
-        for c in s:
-            freq[c] = freq.get(c, 0) + 1
-        
-        for c in t:
-            freq[c] = freq.get(c, 0) - 1
-            if freq[c] == 0:
-                del freq[c]
-             
-        return not freq
-    
-    # TC: O(n)
-    # SC: O(n)
+        return sorted(list(s)) == sorted(list(t))
+
+# Time O(nlogn)
+# Space O(1)

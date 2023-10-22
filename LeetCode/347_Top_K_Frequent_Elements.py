@@ -1,59 +1,74 @@
-#Using a frequency Map
+from heapq import heappop, heappush
+
+
 class Solution:
+    #     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+    #         frequents, hashmap = [], {}
+
+    #         for n in nums:
+    #             hashmap[n] = hashmap.get(n, 0) + 1
+
+    #         for i in range(k):
+    #             maxVal = [0, 0]
+    #             for k in hashmap:
+    #                 if hashmap[k] > maxVal[1]:
+    #                     maxVal = [k, hashmap[k]]
+
+    #             frequents.append(maxVal[0])
+    #             del hashmap[maxVal[0]]
+
+    #         return frequents
+
+    #     Time = O(n + k.n)
+    #     Space = O(n)
+
+    # Using a heap
+    #  def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+    #         if not nums:
+    #             return []
+
+    #         if len(nums) == 1:
+    #             return nums
+
+    #         frequents, hashmap = [], {}
+
+    #         for n in nums: #n
+    #             hashmap[n] = hashmap.get(n, 0) - 1 #to get a maxheap we negate values
+
+    #         heap = []
+
+    #         for key in hashmap: #n
+    #             heappush(heap, (hashmap[key], key))
+
+    #         count = 0
+    #         while count < k: #klogn
+    #             print(count)
+    #             freq, item = heappop(heap)
+    #             frequents.append(item)
+    #             count += 1
+
+    #         return frequents
+
+    #    Time =
+    #    Space = O(n)
+
+    # We can improve this using a variation of bucket sort
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        if k == len(nums): return nums
-        frequencyMap = {}
-        
+        hashmap = {}
+
         for n in nums:
-            frequencyMap[n] = frequencyMap.get(n, 0) + 1
+            hashmap[n] = hashmap.get(n, 0) + 1
 
-        ans = []
-        for i in range(k):
-            maxk, maxv = 0, 0
-            for k in frequencyMap:
-                if frequencyMap[k] > maxv:
-                    maxv = frequencyMap[k]
-                    maxk = k
-            ans.append(maxk)
-            del frequencyMap[maxk]
-            
-        return ans
-    
-# Time = O(NK) or O(N) if len(nums) N is > k
-# Space = O(N) or N + K
+        freq = [[] for i in range(len(nums) + 1)]
+        for key in hashmap:
+            freq[hashmap[key]].append(key)
 
+        res = []
+        for i in range(len(freq) - 1, 0, -1):
+            for n in freq[i]:
+                res.append(n)
+                if len(res) == k:
+                    return res
 
-#Using a frequency Map and a Max heap
-class Solution:
-    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        if k == len(nums): return nums
-        
-        count = collections.Counter(nums)
-        return heapq.nlargest(k, count.keys(), key=count.get)
-    
-# Time = O(NlogK) 
-# Space = O(N + k)
-        
-    
-#Using a frequency Map and bucket sort approach
-class Solution:
-    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        if k == len(nums): return nums
-        frequencyMap = {}
-        bucket = [[] for i in range(len(nums) + 1)]
-        
-        for n in nums:
-            frequencyMap[n] = frequencyMap.get(n, 0) + 1
-            
-        for i, v in frequencyMap.items():
-            bucket[v].append(i)
-
-        ans = []
-        for i in range(len(bucket) -1, 0, -1):
-            for n in bucket[i]:
-                ans.append(n)
-                if len(ans) == k:
-                    return ans        
-    
-# Time = O(N)
-# Space = O(N)
+#     Time = O(n)
+#     Space = O(n)

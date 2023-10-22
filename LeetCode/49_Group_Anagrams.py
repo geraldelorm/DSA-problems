@@ -1,36 +1,40 @@
-from collections import defaultdict 
-
-#Using a hashmap with sorted string/tuple as key
-
 class Solution:
+    #     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+    #         if strs == None or len(strs) < 1: return []
+
+    #         hashmap = {}
+
+    #         for i in range(len(strs)):
+    #             sortedS = str(sorted(strs[i]))
+    #             if sortedS in hashmap:
+    #                 hashmap[sortedS].append(strs[i])
+    #             else:
+    #                 hashmap[sortedS] = [strs[i]]
+
+    #         return [i for i in hashmap.values()]
+
+    # #     Time = O(m * nlogn)
+    # #     Space = O(m)
+
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        d = defaultdict(list)
-        
-        for s in strs:
-            sorted_s = tuple(sorted(s))
-            d[sorted_s].append(s)
-            
-        return [v for v in d.values()]
-    
-# Time = O(NSlogS) where N is the len(of list) and S is len(longest string in list)
-# Space = O(NS) hashmap of array of anagrams
+        hashmap = {}
 
+        for i in range(len(strs)):
+            countKey = self.getCount(strs[i])
+            if countKey in hashmap:
+                hashmap[countKey].append(strs[i])
+            else:
+                hashmap[countKey] = [strs[i]]
 
-#Using a hashmap with tuple count of characters as key
+        return [i for i in hashmap.values()]
 
-class Solution:
-    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        d = defaultdict(list)
-        
-        for s in strs:
-            count = [0] * 26
-            for c in s:
-                count[ord(c) - ord("a")] += 1
-                
-            d[tuple(count)].append(s)
-            
-        return d.values()
-    
-    
-# # Time = O(NS)
-# # Space = O(NS)
+    def getCount(self, s):
+        count = [0] * 26  # get of characters a .... z
+
+        for c in s:
+            count[ord(c) - ord("a")] += 1
+
+        return tuple(count)  # or just string
+
+#     Time = O(m * n) m == array n == len of string
+#     Space = O(m) + 26 index array + call stack for the funtion getCount call

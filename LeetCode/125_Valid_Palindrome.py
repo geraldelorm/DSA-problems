@@ -1,28 +1,31 @@
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        i, j = 0, len(s) - 1
-        
-        while i < j:
-            while i < j and not self.alphanum(s[i]):
-                i += 1
-            while i < j and not self.alphanum(s[j]):
-                j -= 1
-                
-            if s[i].lower() != s[j].lower():
+        newStr = ""
+        for c in s:
+            if c.isalnum():
+                newStr += c.lower()
+
+        return newStr == newStr[::-1]
+
+#     Time = O(n)
+#     Space = O(n)
+
+
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        left, right = 0, len(s) - 1
+
+        while left < right:
+            while left < right and not s[left].isalnum():
+                left += 1
+            while left < right and not s[right].isalnum():
+                right -= 1
+            if s[left].lower() != s[right].lower():
                 return False
-            
-            i += 1
-            j -= 1
-        
+            left += 1
+            right -= 1
+
         return True
-    
-    # Could write own alpha-numeric function
-    def alphanum(self, c):
-        return (
-            ord("A") <= ord(c) <= ord("Z")
-            or ord("a") <= ord(c) <= ord("z")
-            or ord("0") <= ord(c) <= ord("9")
-        )
-    
-# Time = O(n)
-# Space = O(n)
+
+#     Time = O(n)
+#     Space O(1)

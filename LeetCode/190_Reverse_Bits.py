@@ -3,8 +3,9 @@ class Solution:
         res = 0
         for i in range(32):
             bit = (n >> i) & 1
-            res += (bit << (31 - i))
+            res = res | (bit << (31 - i))
+
         return res
 
-    # TC: O(1)
-    # SC: O(1)
+# TIme O(1)
+# Space O(1)

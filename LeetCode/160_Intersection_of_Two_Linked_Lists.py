@@ -1,44 +1,60 @@
-# Using a map
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
 class Solution:
     def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
-        map_of_list_one = set()
+        len_of_A, len_of_B = 0, 0
+        currA, currB = headA, headB
 
-        curr = headA
-        while curr:
-            map_of_list_one.add(curr)
-            curr = curr.next
+        while currA is not None:
+            len_of_A += 1
+            currA = currA.next
 
-        curr = headB
-        while curr:
-            if curr in map_of_list_one:
-                return curr
-            curr = curr.next
-        
-        
-        return None
+        while currB is not None:
+            len_of_B += 1
+            currB = currB.next
 
-# TC: (n + M)
-# SC: O(n)
+        diff = abs(len_of_A - len_of_B)
+
+        if len_of_A > len_of_B:
+            for i in range(diff):
+                headA = headA.next
+
+        elif len_of_B > len_of_A:
+            for i in range(diff):
+                headB = headB.next
+
+        while headA != headB:
+            headA = headA.next
+            headB = headB.next
+
+        return headA
+
+# O(M + N)
 
 
-# O(1) space solution
+# Using stacks
 class Solution:
     def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        stack_of_A, stack_of_B = deque(), deque()
 
-        pointerA = headA
-        pointerB = headB
-        while pointerA != pointerB:
-            if pointerA == None:
-                pointerA = headB
-            else:
-                pointerA = pointerA.next
+        while headA is not None:
+            stack_of_A.append(headA)
+            headA = headA.next
 
-            if pointerB == None:
-                pointerB = headA
-            else:
-                pointerB = pointerB.next
-        
-        return pointerA
+        while headB is not None:
+            stack_of_B.append(headB)
+            headB = headB.next
 
-# TC: (n + M)
-# SC: O(1)
+        intersection = None
+
+        while stack_of_A and stack_of_B:
+            nodeA, nodeB = stack_of_A.pop(), stack_of_B.pop()
+            if nodeA == nodeB:
+                intersection = nodeA
+
+        return intersection
+# O(M+N) space

@@ -1,18 +1,18 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        left, right = 0, len(nums) - 1
-        
-        while left <= right:
-            mid = left + (right - left) // 2
-            
-            if nums[mid] > target:
-                right = mid - 1
-            elif nums[mid] < target:
-                left = mid + 1
+        l, r = 0, len(nums) - 1
+
+        while l <= r:
+            # could over flow use - mid = l + ((r - l) // 2)
+            mid = (l + r) // 2
+            if target > nums[mid]:
+                l = mid + 1
+            elif target < nums[mid]:
+                r = mid - 1
             else:
                 return mid
-            
+
         return -1
-    
-    # TC: (NlogN)
-    # SC: O(1)
+
+#     Time = O(logN)
+#     Space = O(1)

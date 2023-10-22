@@ -1,20 +1,42 @@
 class Solution:
     def isValid(self, s: str) -> bool:
         stack = []
-        pairs = {"(": ")", "{":"}", "[":"]"}
+        
+        for c in s:
+            if c in ('(', '{', '['):
+                stack.append(c)
+                
+            elif not len(stack): return False
+            
+            else:
+                if c == ')' and stack.pop() != '(': return False
+                elif c == '}' and stack.pop() != '{': return False
+                elif c == ']' and stack.pop() != '[': return False
+        return not len(stack)
+
+
+# Time Complexity = O(n)
+# Space Complexity = O(n)
+
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = deque()
 
         for c in s:
-            if c in pairs:
-                stack.append(c)
-            elif not stack:
+            if c in ["(", "{", "["]:
+                stack.appendleft(c)
+            elif len(stack) < 1:
                 return False
             else:
-                top = stack.pop()
-                if pairs[top] != c:
+                if c == ")" and stack.popleft() != "(":
+                    return False
+                if c == "]" and stack.popleft() != "[":
+                    return False
+                if c == "}" and stack.popleft() != "{":
                     return False
 
-        return not stack
+        return len(stack) == 0
 
-# TC: O(n)
-# SC: O(n)
-        
+#   Time O(n)
+#   Space O(n)

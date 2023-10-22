@@ -14,10 +14,9 @@ def main():
         if os.path.isdir(path):  
             print("\nIt is a directory")  
             
-            newName = "Leetcode" + "/" + filename.replace(".", "_").replace(" ", "_") + ".py"
+            newName = "Leetcode" + "/" + filename.replace(".", "").replace(" ", "_") + ".py"
             print(filename, newName)
             rename_and_move_file(path, newName)
-            break
  
 def rename_and_move_file(path, newPath):
     file = os.listdir(path)[0]
@@ -25,8 +24,8 @@ def rename_and_move_file(path, newPath):
     dst = newPath
 
     print(src, dst)
-    # os.rename(src, dst)
-    # os.rmdir(path)
+    os.rename(src, dst)
+    os.rmdir(path)
 
 # Driver Code
 if __name__ == '__main__':

@@ -1,34 +1,39 @@
 class Solution:
+    # def isAnagram(self, map1, map2):
+    #     for k in map1:
+    #         if k not in map2:
+    #             return False
+    #         if map1[k]  != map2[k]:
+    #             return False
+    #     return True
+
     def findAnagrams(self, s: str, p: str) -> List[int]:
-        if len(s) < len(p): return []
+        if len(p) > len(s):
+            return []
 
-        p_map, s_map = collections.Counter(p), {}
-        left, res = 0, []
+        p_map, s_map, res = {}, {}, []
 
-        for right in range(len(s)):
-            s_map[s[right]] = s_map.get(s[right], 0) + 1
+        for i in range(len(p)):
+            p_map[p[i]] = p_map.get(p[i], 0) + 1
+            s_map[s[i]] = s_map.get(s[i], 0) + 1
 
-            if right - left + 1 == len(p):
-                if self.isAnagram(p_map, s_map):
-                    res.append(left)
+        if p_map == s_map:
+            res.append(0)
 
-                s_map[s[left]] -= 1
-                left += 1
+        l = 0
+        for r in range(len(p), len(s)):
+            s_map[s[r]] = s_map.get(s[r], 0) + 1
+            s_map[s[l]] -= 1
+
+            if s_map[s[l]] == 0:
+                s_map.pop(s[l])
+
+            if p_map == s_map:
+                res.append(l + 1)
+
+            l += 1
 
         return res
-            
-    def isAnagram(self, p_map, s_map):
-        for k in p_map:
-            if k not in s_map:
-                return False
-            if s_map[k] != p_map[k]:
-                return False
-
-        return True
-
-    # TC: O(n + m)
-    # SC: O(K) ~ k == 26
 
 
-        
-        
+#     Time O(S)

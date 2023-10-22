@@ -1,57 +1,67 @@
-#Brute Force
-class Solution:
-    def productExceptSelf(self, nums: List[int]) -> List[int]:
-        output = []
-
-        for i in range(len(nums)):
-            product = 1
-            for j in range(len(nums)):
-                if i != j:
-                    product *= nums[j]
-            output.append(product)
-
-        return output
-
-        # TC: O(n^2)
-        # SC: O(n) ~ output included
-
-
-#Using postfix and prefix product arrays
-class Solution:
-    def productExceptSelf(self, nums: List[int]) -> List[int]:
-        left, right = [1] * (len(nums) + 1), [1] * (len(nums) + 1)
-
-        for i in range(1, len(left)):
-            left[i] = left[i - 1] * nums[i - 1]
-
-        for i in range(len(right) - 2, -1, -1):
-            right[i] = right[i + 1] * nums[i]
-
-        for i in range(1, len(right)):
-            nums[i - 1] = (left[i - 1] * right[i])
-
-        return nums
-
-
-        # TC: O(n)
-        # SC: O(n) ~ output not included
-
-
-#Most Optimal ~ use one array which will be return
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         answer = [1] * len(nums)
-
-        for i in range(1, len(nums)):
-            answer[i] = answer[i - 1] * nums[i - 1]
-
-        last_product = 1
+        
+        prefix = 1
+        for i in range(len(nums)):
+            answer[i] = prefix
+            prefix *= nums[i]
+            
+        postfix = 1
         for i in range(len(nums) - 1, -1, -1):
-            answer[i] = answer[i] * last_product
-            last_product = last_product * nums[i]
-
+            answer[i] *= postfix
+            postfix *= nums[i]
+        
         return answer
+# Time = O(n)
+# Space = O(1) = output array (answer) is not considered in this analysis
 
-
-        # TC: O(n)
-        # SC: O(1) ~ output not included
+# class Solution:
+#     def productExceptSelf(self, nums: List[int]) -> List[int]:
+#         answer = []
+        
+#         for i in range(len(nums)):
+#             product = 1
+#             for j in range(len(nums)):
+#                 if j != i: product *= nums[j]
+#             answer.append(product)
+        
+#         return answer
+# time = O(n^2)
+# space = O(n)
+    
+# class Solution:
+#     def productExceptSelf(self, nums: List[int]) -> List[int]:
+#         answer = []
+#         product = 1
+        
+#         zeroCount = 0
+#         for j in range(len(nums)):
+#             if nums[j] != 0: 
+#                 product *= nums[j]
+#             else: 
+#                 zeroCount += 1
+        
+#         if zeroCount > 1:
+#             return [0] * len(nums)
+        
+#         if zeroCount == 1:
+#             for i in range(len(nums)):
+#                 if nums[i] == 0:
+#                     answer.append(product)
+#                 else:
+#                     answer.append(0)
+#             return answer
+        
+#         if zeroCount == 0:
+#             for i in range(len(nums)):
+#                 answer.append(product // nums[i]) # wrong we can't se the diivision
+#             return answer
+        
+#         Time = O(n)
+#         Space = O(n)
+        
+    
+    
+    
+    

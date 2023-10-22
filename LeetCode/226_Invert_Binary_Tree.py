@@ -4,39 +4,74 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
-#Recursive Solution
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if not root: return root
-        
+        if root == None:
+            return
+
         root.left, root.right = root.right, root.left
-        
         self.invertTree(root.left)
         self.invertTree(root.right)
-        
         return root
-    
-# Time = O(n)
-# Space = O(h) h = height of the tree
 
-#Iterative Solution
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if not root: return root
-        queue = collections.deque([root])
-        
-        while queue:
-            curr = queue.popleft()
-            curr.right, curr.left = curr.left, curr.right
-            
-            if curr.left:
-                queue.append(curr.left)
-                
-            if curr.right:
-                queue.append(curr.right)
-        
+        if not root:
+            return root
+
+        root.right, root.left = self.invertTree(
+            root.left), self.invertTree(root.right)
+
         return root
-    
-# Time = O(n)
-# Space = O(n)
+
+#     Time = O(n)
+#     Space = O(1)
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        def helper(node):
+            if not node:
+                return 
+            node.right, node.left = node.left, node.right
+            helper(node.right)
+            helper(node.left)
+            
+        helper(root)
+        return root
+
+
+# Time O(n)
+# Space O(1)
+
+
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+
+        queue = collections.deque([root])
+        while queue:
+            current = queue.popleft()
+            current.left, current.right = current.right, current.left
+
+            if current.left:
+                queue.append(current.left)
+
+            if current.right:
+                queue.append(current.right)
+
+        return root

@@ -1,62 +1,39 @@
-#Brute Force - check all posible steps that can lead to top(n == 0)
 class Solution:
-    def climbStairs(self, n: int) -> int:
-        if n < 0:
-            return 0
-        if n == 0:
-            return 1
-        
-        return self.climbStairs(n - 1) + self.climbStairs(n - 2)
-        
-#Time = O(2^n)
-#SC: O(n)
+    def climbStairs(self, n: int, memo = {1:1, 2:2}) -> int:
+        if n not in memo.keys():
+            memo[n] = self.climbStairs(n - 1, memo) + self.climbStairs(n - 2, memo)
 
-
-#DP = memo
-class Solution:
-    def climbStairs(self, n: int, memo = {}) -> int:
-        if n < 0:
-            return 0
-        if n == 0:
-            return 1
-        
-        if n in memo:
-            return memo[n]
-        
-        memo[n] = self.climbStairs(n - 1, memo) + self.climbStairs(n - 2, memo) 
         return memo[n]
-        
-#Time = O(n)
-#SC: O(n)
+
+#     Time = O(n)
+#     Space = O(n) the memo
+
+# Using DP - optimal solution
+class Solution:
+    def climbStairs(self, n: int, memo={1: 1, 2: 2}) -> int:
+        one, two = 1, 1
+
+        for i in range(n - 1):
+            temp = one
+            one = one + two
+            two = temp
+
+        return one
+
+#     Time = O(n)
+#     Space = O(1)
 
 
-#DP = tabulation
 class Solution:
     def climbStairs(self, n: int) -> int:
-        table = [1] * (n + 1)
-        
-        for i in range(2, n + 1):
-            table[i] = table[i - 1] + table[i - 2]
-        
-        return table[n]
-        
-#Time = O(n)
-#SC: O(n)
+        if n == 1:
+            return 1
+        if n == 2:
+            return 2
 
+        dp = [0, 1, 2]
 
+        for i in range(3, n + 1):
+            dp.append(dp[i - 1] + dp[i - 2])
 
-# Optimazied Space for tabulation
-class Solution:
-    def climbStairs(self, n: int) -> int:
-        if n <= 3:
-            return n
-        n1, n2 = 2, 3
-
-        for i in range(4, n + 1):
-            temp = n1 + n2
-            n1 = n2
-            n2 = temp
-        return n2
-
-# TC: O(n)
-# SC: O(1)
+        return dp[n]

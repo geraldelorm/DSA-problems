@@ -1,16 +1,33 @@
 class Solution:
     def findJudge(self, n: int, trust: List[List[int]]) -> int:
-        degrees = {i: 0 for i in range(1, n + 1)}
+        table = {}
 
-        for [p1, p2] in trust:
-            degrees[p1] += 1
-            degrees[p2] -= 1
+        for p in range(1, n + 1):
+            table[p] = 0
 
-        for person in range(1, n +1):
-            if degrees[person] == -n + 1:
-                return person
+        for a, b in trust:
+            table[a] -= 1
+            table[b] += 1
+
+        for key in table.keys():
+            if table[key] == n - 1:
+                return key
+        return -1
+        
+# Time = O(n + m) |Vertices| + |Edges|
+# Space = O(n)
+
+
+class Solution:
+    def findJudge(self, n: int, trust: List[List[int]]) -> int:
+        connections = [0] * (n + 1)
+
+        for v in trust:
+            connections[v[0]] -= 1
+            connections[v[1]] += 1
+
+        for i in range(1, n + 1):
+            if connections[i] == n - 1:
+                return i
 
         return -1
-
-        # TC: O(E) edges
-        # SC: O(N) 

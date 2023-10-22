@@ -1,31 +1,21 @@
+# 
+
 class Solution:
     def rotate(self, matrix: List[List[int]]) -> None:
-        left, right = 0, len(matrix) - 1
-        
-        while left < right:
-            top, buttom = left, right
-            for i in range(right - left):
-                #store top_left value temporarily
-                top_left = matrix[top][left + i]
-                
-                #move buttom_left to top_left
-                matrix[top][left + i] = matrix[buttom - i][left]
-                
-                #move buttom_right to buttom_left
-                matrix[buttom - i][left] = matrix[buttom][right - i]
-                
-                #move top_right to buttom_right
-                matrix[buttom][right - i] = matrix[top + i][right]
-                
-                #move saved top_left to top_left
-                matrix[top + i][right] = top_left
-                
+        self.transpose(matrix)
+        self.reflect(matrix)
 
-            left += 1
-            right -= 1
-            
-        return matrix
-    
 
-    # TC: O(N^2)
-    #SC: O(1)
+    def transpose(self, matrix):
+        n = len(matrix)
+        for r in range(n):
+            for c in range(r + 1, n):
+                matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
+
+    def reflect(self, matrix):
+        n = len(matrix)
+        for r in range(n):
+            for c in range(n//2):
+                matrix[r][c], matrix[r][n - c - 1] = matrix[r][n - c - 1], matrix[r][c]
+
+# O(m) where m is number of elements in matrix

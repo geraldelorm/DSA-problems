@@ -1,30 +1,34 @@
-class Codec:
-    def encode(self, strs: List[str]) -> str:
-        """Encodes a list of strings to a single string.
-        """
-        res = ""
+class Solution:
+    """
+    @param: strs: a list of strings
+    @return: encodes a list of strings to a single string.
+    """
+
+    def encode(self, strs):
+        encoded = ""
         for s in strs:
-            res += str(len(s)) +"#" + s
-        return res
+            encoded += str(len(s)) + "#" + s
+        return encoded
 
-    def decode(self, s: str) -> List[str]:
-        """Decodes a single string to a list of strings.
-        """    
-        res, i = [], 0
+# Time / space = O(n)
+    """
+    @param: str: A string
+    @return: dcodes a single string to a list of strings
+    """
 
-        while i < len(s):
+    def decode(self, str):
+        decoded, i = [], 0
+        "10#kofiyhdgte3#Ama5#Amina"
+
+        while i < len(str):
             j = i
-            while s[j] != "#":
+            while str[j] != "#":
                 j += 1
-            length = int(s[i:j])
-            res.append(s[j + 1 : j + 1 + length])
-            i = j + 1 + length
-        return res
 
-# Time = O(n)
-# Space = O(n)
+            lenght = int(str[i:j])
+            decoded.append(str[j + 1: j + 1 + lenght])
+            r = j + 1 + lenght
 
+        return decoded
 
-# Your Codec object will be instantiated and called as such:
-# codec = Codec()
-# codec.decode(codec.encode(strs))
+# Time / space = O(n)

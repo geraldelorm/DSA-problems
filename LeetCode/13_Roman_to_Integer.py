@@ -1,16 +1,14 @@
 class Solution:
     def romanToInt(self, s: str) -> int:
-        res = 0
-        look_up = {"I": 1, "V": 5, "X": 10, "L": 50, "C":100, "D": 500, "M":1000}
-        deductable = {"I": {"V", "X"}, "X" : {"L", "C"}, "C": {"D", "M"}}
+        lookup = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+        count = 0
+        for i in range(len(s)):
+            if i + 1 < len(s) and lookup[s[i]] < lookup[s[i +1]]:                    
+                count -= lookup[s[i]]
+            else:
+                count += lookup[s[i]]
+        return count
 
-        for i, c in enumerate(s):
-            val = look_up[c]
-            if c in deductable and i < len(s) - 1 and s[i + 1] in deductable[c]:
-                res -= 2 * look_up[c]
-            res += val
 
-        return res
-
-# TC: O(1) 3999 max from description
-# SC: O(1)
+# Time = o(n)
+# Space = O(1) lookup table

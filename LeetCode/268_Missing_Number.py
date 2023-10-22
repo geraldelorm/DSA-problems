@@ -1,28 +1,40 @@
+# Brute force solution -p actusally faster on leetcode then the rest
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
-        look_up = set()
-        for n in nums:
-            look_up.add(n)    
-            
+        lookup = set()
+        for i in nums:
+            lookup.add(i)
+
         for i in range(len(nums) + 1):
-            if i not in look_up:
+            if i not in lookup:
                 return i
-            
-        # TC: O(n)
-        # SC: O(n)
-        
-        
-# Reduce space with sum of both and - substract
+
+# Time = O(n) -> 2n
+# Space = 0(n)
+
+# class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        sum1, sum2 = 0, 0
+        for i in range(len(nums)):
+            sum1 += nums[i]
+            sum2 += i
+        sum2 += len(nums)
+        return sum2 - sum1
+
+# time O(n)
+# space O(1)
+
+# Bit manipulation
+
+
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
         res = len(nums)
 
         for i in range(len(nums)):
-            res += i - nums[i]
+            res += (i - nums[i])
+
         return res
 
-            
-        # TC: O(n)
-        # SC: O(1)
-        
-# Can you code the bit munipulation solution?
+# time O(n)
+# space O(1)

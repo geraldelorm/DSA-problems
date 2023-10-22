@@ -4,36 +4,37 @@
 #         self.val = val
 #         self.next = next
 
-#Itertive
+# Iterative
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        prev = None
-        curr = head
+        prevNode = None
 
-        while curr:
-            temp = curr.next
-            curr.next = prev
-            prev = curr
-            curr = temp
+        while head:
+            nextNode = head.next
+            head.next = prevNode
+            prevNode = head
+            head = nextNode
 
-        return prev
+        return prevNode
+# Time = O(n)
+# Space = O(1)
 
-# TC: O(N)
-# SC: O(1)
-
-
-# Recursive
-class Solution:
+# Time Complexity = O(n)
+# Space Complexity = O(1)
+    
+# Recursive Solution
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if not head or not head.next:
-            return head
-
-        prev = self.reverseList(head.next)
-        head.next.next = head
-        head.next = None
-        return prev
-
-# TC: O(N)
-# SC: O(N) = call stack
-
         
+        if not head:
+            return None
+        
+        newHead = head
+        if head.next:
+            newHead  = self.reverseList(head.next)
+            head.next.next = head
+        head.next = None
+        
+        return newHead
+
+# Time Complexity = O(n)
+# Space Complexity = O(n)
