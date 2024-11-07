@@ -32,3 +32,38 @@ class Solution:
             return []
 
         return answer[min(answer.keys())]
+
+
+class Solution:
+    def findSequences(self, beginWord, endWord, wordList):
+        word_list = set(wordList)
+        queue = collections.deque()
+        queue.append([[beginWord], 1])
+        visited = set([beginWord])
+
+        answer = []
+        target_dist = float("inf")
+
+        while queue:
+            curr_word_path, dist = queue.popleft()
+            curr_word = curr_word_path[-1]
+
+            if dist > target_dist:
+                break
+
+            visited.add(curr_word)
+
+            if curr_word == endWord:
+                answer.append(curr_word_path)
+                target_dist = dist
+
+            for i in range(len(curr_word)):
+                curr_word_list = list(curr_word)
+                for new_c in "abcdefghijklmnopqrstuvwxyz":
+                    curr_word_list[i] = new_c
+                    new_word = "".join(curr_word_list)
+
+                    if new_word in word_list and new_word not in visited:
+                        queue.append([curr_word_path + [new_word], dist + 1])
+
+        return answer
